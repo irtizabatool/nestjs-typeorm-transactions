@@ -7,9 +7,13 @@ import { User } from './user.entity';
 
 @Injectable()
 export class AppService {
-  constructor(@InjectRepository(Pet) private petRepository: Repository<Pet>) {}
-  async getUsers(): Promise<Pet[]> {
-    const profile = await this.petRepository.find();
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+  ) {}
+  async getUsers(): Promise<User[]> {
+    const profile = await this.userRepository.find({
+      relations: ['pets'],
+    });
     return profile;
   }
 
